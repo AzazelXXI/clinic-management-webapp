@@ -12,8 +12,8 @@ create table Patient
 	Email nvarchar(255) not null,
 	Phone int not null,
 	Gender nvarchar(255) not null,
-	Status nvarchar(255) not null,
-	Address nvarchar(255) not null,
+	Status nvarchar(255),
+	Address nvarchar(255),
 )
 
 create table Staff
@@ -82,14 +82,3 @@ create table Shift
 	Start_Date datetime,
 	End_Date datetime
 )
-
-select * from Patient
-
-insert into Patient(Name, Password, Age, Email, Phone, Gender, Status, Address)
-values 
-('Trung', '123', 21, 'trunghoang1124@gmail.com', 0123456789, 'Male', 'Good', 'TPHCM'),
-('Hoàng', '456', 22, 'hoang4211@gmail.com', 0987654321, 'Male', 'Cancer', 'Hà Nội');
-
-SELECT SERVERPROPERTY('IsIntegratedSecurityOnly')
-
-ALTER LOGIN sa WITH PASSWORD = 'KiroHoang1124@hutech.dev';

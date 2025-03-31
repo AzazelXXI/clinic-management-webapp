@@ -1,29 +1,23 @@
 const express = require('express');
 const sql = require('mssql');
 const config = require('./config')
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 const port = 3000;
 
-app.use(express.json());
-/*
-    Patient API
- */
-
-app.get('/api/patient/list', async (req, res) => {
+app.get('/api/patients/list', async (req, res) => {
     try {
-        // Connection to SQL Server
-        let pool = await sql.connect(config);
-        // Access data from patient table
-        let result = await pool.request().query('select * from Patient');
-
-        // Return data as Json
+        await sql.connect(config);
+        const result = await sql.query('SELECT * FROM Patient');
         res.json(result.recordset);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Error white taking data' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Lỗi khi truy vấn dữ liệu từ SQL Server');
     }
 });
+
 
 app.post('/api/patient/add', async (req, res) => {
     try {
@@ -37,7 +31,7 @@ app.post('/api/patient/add', async (req, res) => {
         let pool = await sql.connect(config);
         let result = await pool.request()
             .input('Name', sql.NVarChar, Name)
-            .input('Password', sql.NVarChar, Password)
+            .input('Password', sql.VarChar, Password)
             .input('Age', sql.Int, Age)
             .input('Email', sql.NVarChar, Email)
             .input('Phone', sql.Int, Phone)
@@ -112,7 +106,7 @@ app.get('/api/staff/list', async (req, res) => {
         res.json(result.recordset);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: "Error while taking data"});
+        res.status(500).json({ error: "Error while taking data" });
     }
 });
 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Record</title>
+    <link rel="stylesheet" href="../css/medicalrecord.css">
+</head>
+
+<body>
+    <div class="navbar-container">
+        <div class="navbar">
+            <nav>
+                <span><a href="index.html">Introduction</a></span>
+                <span><a href="medicalrecord.html">Medical Records</a></span>
+                <span><a href="bookingappointment.html">Booking Appointment</a></span>
+            </nav>
+        </div>
+    </div>
+    <div class="medicalrecord-form">
+        <label>Patient Name:</label>
+        <input type="text" id="patient-name" readonly>
+    </div>
+    <div class="medicalrecord-form">
+        <label>Doctor Name:</label>
+        <input type="text" id="doctor-name" readonly>
+    </div>
+    <div class="medicalrecord-form">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" readonly>
+        <label>End Date:</label>
+        <input type="date" id="End_Date" readonly>
+    </div>
+    <div class="medicalrecord-form">
+        <label>Status:</label><br>
+        <textarea id="Status" rows="10" cols="50" readonly></textarea>
+    </div>
+</body>
+
+</html>

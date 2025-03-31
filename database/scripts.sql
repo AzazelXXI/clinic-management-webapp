@@ -7,7 +7,7 @@ create table Patient
 (
 	Id int identity(1,1) not null primary key,
 	Name nvarchar(255) not null,
-	Password nvarchar(255) not null,
+	Password varchar(255) not null,
 	Age int not null,
 	Email nvarchar(255) not null,
 	Phone int not null,
@@ -22,12 +22,12 @@ create table Staff
 	Name nvarchar(255) not null,
 	Age int not null,
 	Gender nvarchar(255) not null,
-	Role nvarchar(255) not null, -- Doctor or Nurse
+	Role nvarchar(255) not null,
+	-- Doctor or Nurse
 	Salary int not null,
-	Shift nvarchar(255) not null
+	Shift nvarchar(255)
 )
--- Hồ sơ bệnh án bác sĩ dùng để ghi lại tình trạng của bệnh nhân sau khi khám
--- Khám trong khoảng thời gian nào và hoàn thành vào thời gian nào
+
 create table MedicalRecord
 (
 	Id int identity(1,1) not null primary key,
@@ -37,7 +37,7 @@ create table MedicalRecord
 	Start_Date datetime,
 	End_Date datetime
 
-	foreign key (PatientId) references Patient (Id),
+		foreign key (PatientId) references Patient (Id),
 	foreign key (StaffId) references Staff (Id)
 )
 
@@ -54,16 +54,20 @@ create table Room
 (
 	Id int identity(1,1) not null primary key,
 	Name nvarchar(255),
-	Operator nvarchar(255),
+	StaffId int,
 	Status nvarchar(255)
+
+	FOREIGN KEY (StaffId) REFERENCES Staff (Id)
 )
 
 create table Calendar
 (
-	PatientId int not null,
-	StaffId int not null,
+	PatientId int,
+	StaffId int,
 	Start_Date datetime,
-	End_Date datetime
+
+	FOREIGN KEY (PatientId) REFERENCES Patient (Id),
+	FOREIGN KEY (StaffId) REFERENCES Staff (Id)
 )
 
 create table Statistic
@@ -79,4 +83,6 @@ create table Shift
 	StaffId int,
 	Start_Date datetime,
 	End_Date datetime
+
+	FOREIGN KEY (StaffId) REFERENCES Staff (Id)
 )

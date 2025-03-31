@@ -1,0 +1,119 @@
+/* Reset cơ bản */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body chung */
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f2f2f2;
+    color: #333;
+    padding-top: 70px;
+    /* Tạo khoảng trống cho navbar fixed */
+}
+
+/* Navigation Bar - đặt fixed lên trên cùng */
+.navbar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #007BFF;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.navbar nav span {
+    margin: 0 20px;
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.navbar nav a:hover {
+    color: #ffdd57;
+}
+
+/* Container chính của form */
+.bp-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Header của form */
+  .bap-form-header {
+    background: #007BFF;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .bap-form-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  /* Phần form bên trong */
+  .bapform {
+    padding: 30px 20px;
+  }
+  
+  /* Các nhóm form */
+  .bap-form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .bap-form-group label {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .bap-form-group input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+  }
+  
+  .bap-form-group input:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+  
+  /* Style cho nút Submit */
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  button[type="submit"]:hover {
+    background: #0056b3;
+  }

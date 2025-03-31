@@ -1,0 +1,93 @@
+/* Reset cơ bản */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 18px; /* Tăng kích thước font chung */
+}
+
+/* Container với padding và hiệu ứng fade in */
+.register-container {
+  background: #fff;
+  padding: 30px 40px; /* Tăng padding cho container */
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+/* Header của form với tiêu đề lớn hơn */
+.register-header h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 2rem; /* Tiêu đề lớn */
+}
+
+/* Các phần tử của form */
+.register-form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.register-form label {
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 1.2rem; /* Tăng kích thước label */
+}
+
+/* Áp dụng style cho các input: text, number và password */
+.register-form input[type="text"],
+.register-form input[type="number"],
+.register-form input[type="password"] {
+  padding: 12px;
+  font-size: 1.1rem; /* Tăng kích thước input */
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  transition: border-color 0.3s;
+}
+
+.register-form input[type="text"]:focus,
+.register-form input[type="number"]:focus,
+.register-form input[type="password"]:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Nút submit đã được điều chỉnh kích thước */
+.register-form input[type="submit"] {
+  padding: 10px; /* Giảm padding so với 14px ban đầu */
+  font-size: 1.1rem; /* Giảm kích thước font chữ cho nút submit */
+  border: none;
+  border-radius: 3px;
+  background: #007BFF;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.register-form input[type="submit"]:hover {
+  background: #0056b3;
+}
+
+/* Hiệu ứng fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -24,7 +24,6 @@ create table Staff
 	Gender nvarchar(255) not null,
 	Role nvarchar(255) not null, -- Doctor or Nurse
 	Salary int not null,
-	Image nvarchar(255),
 	Shift nvarchar(255) not null
 )
 -- Hồ sơ bệnh án bác sĩ dùng để ghi lại tình trạng của bệnh nhân sau khi khám
@@ -54,7 +53,6 @@ create table ListMedication
 create table Room
 (
 	Id int identity(1,1) not null primary key,
-	BranchId int not null,
 	Name nvarchar(255),
 	Operator nvarchar(255),
 	Status nvarchar(255)

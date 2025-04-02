@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Management</title>
+    <link rel="stylesheet" href="../css/navbar.css">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .staff-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .staff-header h1 {
+            color: #333;
+        }
+        .staff-input-form {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        label {
+            width: 100px;
+            font-weight: bold;
+        }
+        input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form {
+            background: white;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <div class="navbar">
+            <nav>
+                <span><a href="admin_menu.html">Home</a></span>
+                <span><a href="patient.html">Patient</a></span>
+                <span><a href="staff.html">Staff</a></span>
+                <span><a href="#">Shift</a></span>
+                <span><a href="#">Medical Records</a></span>
+                <span><a href="#">Medical List</a></span>
+                <span><a href="#">Statistics</a></span>
+                <span><a href="#">Room</a></span>
+                <span><a href="#">Appointment</a></span>
+            </nav>
+        </div>
+    </div>
+    <div class="staff-header">
+        <h1>Staff Management</h1>
+    </div>
+
+    <!-- Form nhập thông tin nhân viên -->
+    <form id="staffForm">
+        <div class="staff-input-form">
+            <label>Id: </label>
+            <input type="text" name="Id" required>
+        </div>
+        <div class="staff-input-form">
+            <label>Name: </label>
+            <input type="text" name="Name" required>
+        </div>
+        <div class="staff-input-form">
+            <label>Password:</label>
+            <input type="password" name="Password" required>
+        </div>
+        <div class="staff-input-form">
+            <label>Age: </label>
+            <input type="number" name="Age" required>
+        </div>
+        <div class="staff-input-form">
+            <label>Gender: </label>
+            <input type="text" name="Gender" required>
+        </div>
+        <div class="staff-input-form">
+            <label>Role: </label>
+            <input type="text" name="Role" required>
+        </div>
+        <div class="staff-input-form">
+            <label>Salary: </label>
+            <input type="number" name="Salary" required>
+        </div>
+        <div class="staff-input-form">
+            <input type="submit" value="Register">
+        </div>
+    </form>
+
+    <!-- Danh sách nhân viên -->
+    <h2>Staff List</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Role</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody id="staffList">
+            <!-- Dữ liệu sẽ được cập nhật ở đây -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('staffForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const staffData = {
+                Id: formData.get('Id'),
+                Name: formData.get('Name'),
+                Password: formData.get('Password'),
+                Age: formData.get('Age'),
+                Gender: formData.get('Gender'),
+                Role: formData.get('Role'),
+                Salary: formData.get('Salary')
+            };
+
+            try {
+                let response = await fetch('http://localhost:3000/api/staff/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(staffData)
+                });
+
+                let result = await response.json();
+                if (response.ok) {
+                    alert(result.message);
+                    fetchStaffList(); // Cập nhật danh sách nhân viên sau khi thêm
+                } else {
+                    alert(result.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        async function fetchStaffList() {
+            try {
+                let response = await fetch('http://localhost:3000/api/staff/list'); // API lấy danh sách nhân viên
+                let staffList = await response.json();
+
+                let tableBody = document.getElementById('staffList');
+                tableBody.innerHTML = ''; // Xóa dữ liệu cũ
+
+                staffList.forEach(staff => {
+                    let row = `<tr>
+                        <td>${staff.Id}</td>
+                        <td>${staff.Name}</td>
+                        <td>${staff.Age}</td>
+                        <td>${staff.Gender}</td>
+                        <td>${staff.Role}</td>
+                        <td>${staff.Salary}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error('Error fetching staff list:', error);
+            }
+        }
+
+        // Gọi API lấy danh sách nhân viên khi trang load
+        fetchStaffList();
+    </script>
+</body>
+</html>

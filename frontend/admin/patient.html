@@ -1,16 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient</title>
+    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/patient.css">
 </head>
+
 <body>
+    <div class="navbar-container">
+        <div class="navbar">
+            <nav>
+                <span><a href="admin_menu.html">Home</a></span>
+                <span><a href="patient.html">Patient</a></span>
+                <span><a href="staff.html">Staff</a></span>
+                <span><a href="#">Shift</a></span>
+                <span><a href="#">Medical Records</a></span>
+                <span><a href="#">Medical List</a></span>
+                <span><a href="#">Statistics</a></span>
+                <span><a href="#">Room</a></span>
+                <span><a href="#">Appointment</a></span>
+            </nav>
+        </div>
+    </div>
     <div class="patient-list">
         <h1>Patient List</h1>
-        <ul id="patient-list"></ul>
-        <script src="../js/patient.js"></script>
+        <table id="patient-list-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Gender</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody id = "patient-list">
+                <!-- Các dòng dữ liệu bệnh nhân sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+        <script src="../js/script.js"></script>
     </div>
+
 </body>
+
 </html>

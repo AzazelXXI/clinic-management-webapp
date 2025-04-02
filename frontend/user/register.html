@@ -4,16 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/register.css">
-    <title>Register</title>
+    <link rel="stylesheet" href="../css/register.css">
+    <title>User - Register</title>
 </head>
 
 <body>
-    <form action="login.html" method="POST">
-        <div class="register-container">
-            <div class="register-header">
-                <h1>Register</h1>
-            </div>
+    <div class="register-container">
+        <div class="register-header">
+            <h1>Register</h1>
+        </div>
+        <!-- Đặt id cho form để dễ lấy ra trong JS -->
+        <form id="register-form">
             <div class="register-form">
                 <label>Name:</label>
                 <input type="text" name="Name" required>
@@ -35,14 +36,20 @@
                 <input type="text" name="Address" required>
             </div>
             <div class="register-form">
+                <label>Email:</label> <!-- Thêm Email vào form -->
+                <input type="email" name="Email" required>
+            </div>
+            <div class="register-form">
                 <label>Password:</label>
                 <input type="password" name="Password" required>
             </div>
             <div class="register-form">
-                <input type="submit">
+                <input type="submit" value="Register">
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+
+    <script src="js/script.js"></script>
 </body>
 
 </html>

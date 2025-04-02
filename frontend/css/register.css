@@ -49,6 +49,7 @@ body {
 /* Áp dụng style cho các input: text, number và password */
 .register-form input[type="text"],
 .register-form input[type="number"],
+.register-form input[type="email"],
 .register-form input[type="password"] {
   padding: 12px;
   font-size: 1.1rem; /* Tăng kích thước input */
@@ -59,6 +60,7 @@ body {
 
 .register-form input[type="text"]:focus,
 .register-form input[type="number"]:focus,
+.register-form input[type="email"]:focus,
 .register-form input[type="password"]:focus {
   border-color: #007BFF;
   outline: none;

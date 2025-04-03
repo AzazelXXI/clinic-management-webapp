@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Management - Clinic</title>
+    <title>Medical Storage Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f0f8ff;
-            color: #03396c;
+            background-color: #e6f7ff;
+            color: #007bff;
         }
         .container {
             background: #ffffff;
@@ -17,24 +17,21 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .table th {
-            background-color: #03396c;
+            background-color: #007bff;
             color: white;
         }
         .btn-primary {
-            background-color: #0275d8;
-            border-color: #025aa5;
+            background-color: #0056b3;
+            border-color: #004085;
         }
         .btn-warning {
-            background-color: #ffcc00;
-            border-color: #e6b800;
-            color: black;
+            background-color: #3399ff;
+            border-color: #007bff;
+            color: white;
         }
         .btn-danger {
             background-color: #d9534f;
             border-color: #d43f3a;
-        }
-        .modal-content {
-            border-radius: 10px;
         }
         .navbar {
             background-color: #006eff;
@@ -73,30 +70,29 @@
             <a href="#">Appointment</a>
         </nav>
     </div>
-    </style>
-</head>
-<body>
     <div class="container mt-5">
-        <h2 class="mb-4 text-center">Room Management</h2>
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addRoomModal">Add New Room</button>
+        <h2 class="mb-4 text-center">Medical Storage Management</h2>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addMedicalModal">Add New Item</button>
         <table class="table table-bordered text-center">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Name</th>
                     <th>Staff ID</th>
-                    <th>Device ID</th>
-                    <th>Status</th>
+                    <th>Quantity</th>
+                    <th>Expire Date</th>
+                    <th>Publisher</th>
+                    <th>Description</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>Consultation Room 1</td>
+                    <td>001</td>
                     <td>101</td>
-                    <td>501</td>
-                    <td>Available</td>
+                    <td>50</td>
+                    <td>2025-12-31</td>
+                    <td>ABC Pharma</td>
+                    <td>Pain reliever</td>
                     <td>
                         <button class="btn btn-warning btn-sm">Edit</button>
                         <button class="btn btn-danger btn-sm">Delete</button>
@@ -106,41 +102,42 @@
         </table>
     </div>
 
-    <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addMedicalModal" tabindex="-1" aria-labelledby="addMedicalModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="addRoomModalLabel">Add New Room</h5>
+                    <h5 class="modal-title" id="addMedicalModalLabel">Add New Medical Item</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="roomName" class="form-label">Room Name</label>
-                            <input type="text" class="form-control" id="roomName" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="staffId" class="form-label">Staff ID</label>
-                            <input type="text" class="form-control" id="staffId">
+                            <input type="text" class="form-control" id="staffId" required>
                         </div>
                         <div class="mb-3">
-                            <label for="deviceId" class="form-label">Device ID</label>
-                            <input type="text" class="form-control" id="deviceId">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" required>
                         </div>
                         <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select class="form-select" id="status">
-                                <option value="Available">Available</option>
-                                <option value="Occupied">Occupied</option>
-                            </select>
+                            <label for="expireDate" class="form-label">Expire Date</label>
+                            <input type="date" class="form-control" id="expireDate" required>
                         </div>
-                        <button type="submit" class="btn btn-success w-100">Save Room</button>
+                        <div class="mb-3">
+                            <label for="publisher" class="form-label">Publisher</label>
+                            <input type="text" class="form-control" id="publisher" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Save Item</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

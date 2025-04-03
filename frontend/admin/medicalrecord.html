@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,10 @@
     <style>
         body {
             background-color: #f0fff0;
-            color: white;
+            color: black;
             text-align: center;
         }
+
         .container {
             background: #ffffff;
             padding: 20px;
@@ -18,64 +20,84 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             color: black;
         }
+
         .table th {
             background-color: #03396c;
             color: white;
         }
+
         .table td {
             text-align: center;
         }
+
         .btn-primary {
             background-color: #0275d8;
             border-color: #025aa5;
         }
+
         .btn-warning {
             background-color: #ffcc00;
             border-color: #e6b800;
             color: black;
         }
+
         .btn-danger {
             background-color: #d9534f;
             border-color: #d43f3a;
         }
+
         .modal-content {
             border-radius: 10px;
         }
+
         .navbar-container {
             display: flex;
             justify-content: center;
             padding: 10px 0;
             background-color: #006eff;
         }
+
         .navbar-container nav {
             display: flex;
             gap: 20px;
         }
+
         .navbar-container nav a {
             color: white;
             text-decoration: none;
             font-weight: bold;
             padding: 10px 15px;
         }
+
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 0.2em;
+        }
     </style>
 </head>
+
 <body>
     <div class="navbar-container">
-        <nav>
-            <a href="admin_menu.html">Home</a>
-            <a href="patient.html">Patient</a>
-            <a href="staff.html">Staff</a>
-            <a href="#">Medical Record</a>
-            <a href="#">Medical List</a>
-            <a href="#">Statistics</a>
-            <a href="#">Room</a>
-            <a href="#">Appointment</a>
-        </nav>
+        <div class="navbar">
+            <nav>
+                <span><a href="admin_menu.html">Home</a></span>
+                <span><a href="patient.html">Patient</a></span>
+                <span><a href="staff.html">Staff</a></span>
+                <span><a href="shift.html">Shift</a></span>
+                <span><a href="medicalrecord.html">Medical Records</a></span>
+                <span><a href="medicalStorage.html">Medical Storage</a></span>
+                <span><a href="device.html">Device</a></span>
+                <span><a href="room.html">Room</a></span>
+                <span><a href="appointment.html">Appointment</a></span>
+            </nav>
+        </div>
     </div>
-    
+
     <div class="container mt-5">
         <h2 class="mb-4 text-center">Medical Record Management</h2>
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addMedicalRecordModal">Add New Medical Record</button>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addMedicalRecordModal">Add New
+            Medical Record</button>
         <table class="table table-bordered text-center">
             <thead>
                 <tr>
@@ -88,24 +110,14 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>001</td>
-                    <td>123</td>
-                    <td>101</td>
-                    <td>Active</td>
-                    <td>2025-01-01</td>
-                    <td>2025-01-10</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
+            <tbody id="medicalRecordsTableBody">
+
             </tbody>
         </table>
     </div>
 
-    <div class="modal fade" id="addMedicalRecordModal" tabindex="-1" aria-labelledby="addMedicalRecordModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addMedicalRecordModal" tabindex="-1" aria-labelledby="addMedicalRecordModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
@@ -113,34 +125,34 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="recordId" class="form-label">Record ID</label>
-                            <input type="text" class="form-control" id="recordId" placeholder="Enter record ID" required>
-                        </div>
+                    <form id="addMedicalRecordForm">
+
                         <div class="mb-3">
                             <label for="patientId" class="form-label">Patient ID</label>
-                            <input type="text" class="form-control" id="patientId" placeholder="Enter patient ID" required>
+                            <input type="text" class="form-control" id="patientId" placeholder="Enter patient ID"
+                                required>
+                            <div class="error-message" id="patientIdError"></div>
                         </div>
                         <div class="mb-3">
                             <label for="staffId" class="form-label">Staff ID</label>
                             <input type="text" class="form-control" id="staffId" placeholder="Enter staff ID" required>
+                            <div class="error-message" id="staffIdError"></div>
                         </div>
                         <div class="mb-3">
                             <label for="patientStatus" class="form-label">Patient Status</label>
-                            <select class="form-control" id="patientStatus" required>
-                                <option value="">Select status</option>
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
+                            <input type="text" class="form-control" id="patientStatus"
+                                placeholder="Enter patient status" required>
+                            <div class="error-message" id="patientStatusError"></div>
                         </div>
                         <div class="mb-3">
                             <label for="startDate" class="form-label">Start Date</label>
                             <input type="date" class="form-control" id="startDate" required>
+                            <div class="error-message" id="startDateError"></div>
                         </div>
                         <div class="mb-3">
                             <label for="endDate" class="form-label">End Date</label>
                             <input type="date" class="form-control" id="endDate" required>
+                            <div class="error-message" id="endDateError"></div>
                         </div>
                         <button type="submit" class="btn btn-success w-100">Save Record</button>
                     </form>
@@ -148,7 +160,9 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/medicalrecord.js"></script>
 </body>
+
 </html>

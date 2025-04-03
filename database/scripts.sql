@@ -47,7 +47,9 @@ create table MedicalStorage
 	Quantity int,
 	Expire_Date datetime,
 	Publisher nvarchar(255),
-	Description nvarchar(255)
+	Description nvarchar(255),
+
+	foreign key (StaffId) references Staff (Id)
 )
 
 create table Room

@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shift Management - Clinic</title>
+    <link rel="stylesheet" href="../css/navbar.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f0fff0;
-            color: white;
+            color: black;
+            /* Changed text color to black for better readability on light background */
             text-align: center;
         }
+
         .container {
             background: #ffffff;
             padding: 20px;
@@ -18,93 +22,96 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             color: black;
         }
+
         .table th {
             background-color: #03396c;
             color: white;
         }
+
         .table td {
             text-align: center;
+            vertical-align: middle;
         }
+
         .btn-primary {
             background-color: #0275d8;
             border-color: #025aa5;
         }
+
         .btn-warning {
             background-color: #ffcc00;
             border-color: #e6b800;
             color: black;
         }
+
         .btn-danger {
             background-color: #d9534f;
             border-color: #d43f3a;
         }
+
         .modal-content {
             border-radius: 10px;
         }
-        .navbar {
-            background-color: #006eff;
-            border-radius: 0;
-            text-align: center;
+
+        .datetime-column {
+            min-width: 160px;
         }
-        .navbar-container {
-            display: flex;
-            justify-content: center;
-            padding: 10px 0;
-            background-color: #006eff;
+
+        .date-column {
+            min-width: 120px;
         }
-        .navbar-container nav {
-            display: flex;
-            gap: 20px;
-        }
-        .navbar-container nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 10px 15px;
+
+        .error-message {
+            color: red;
+            font-size: 0.8em;
+            margin-top: 0.2em;
         }
     </style>
 </head>
+
 <body>
     <div class="navbar-container">
-        <nav>
-            <a href="admin_menu.html">Home</a>
-            <a href="patient.html">Patient</a>
-            <a href="staff.html">Staff</a>
-            <a href="#">Shift</a>
-            <a href="#">Medical Records</a>
-            <a href="#">Medical List</a>
-            <a href="#">Statistics</a>
-            <a href="#">Room</a>
-            <a href="#">Appointment</a>
-        </nav>
+        <div class="navbar">
+            <nav>
+                <span><a href="admin_menu.html">Home</a></span>
+                <span><a href="patient.html">Patient</a></span>
+                <span><a href="staff.html">Staff</a></span>
+                <span><a href="shift.html">Shift</a></span>
+                <span><a href="medicalrecord.html">Medical Records</a></span>
+                <span><a href="medicalStorage.html">Medical Storage</a></span>
+                <span><a href="device.html">Device</a></span>
+                <span><a href="room.html">Room</a></span>
+                <span><a href="appointment.html">Appointment</a></span>
+            </nav>
+        </div>
     </div>
-    
+
     <div class="container mt-5">
         <h2 class="mb-4 text-center">Shift Management</h2>
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addShiftModal">Add New Shift</button>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addShiftModal">Add New
+            Shift</button>
+
         <table class="table table-bordered text-center">
             <thead>
                 <tr>
-                    <th>Staff ID</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
+                    <th>Staff</th>
+                    <th class="date-column">Date</th>
+                    <th class="datetime-column">Start Time</th>
+                    <th class="datetime-column">End Time</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>101</td>
-                    <td>08:00 AM</td>
-                    <td>04:00 PM</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
-
+    <div id="notification"
+        class="toast align-items-center text-white bg-primary border-0 position-fixed top-0 end-0 m-3">
+        <div class="d-flex">
+            <div class="toast-body"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
     <div class="modal fade" id="addShiftModal" tabindex="-1" aria-labelledby="addShiftModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -113,18 +120,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="shiftForm">
                         <div class="mb-3">
                             <label for="staffId" class="form-label">Staff ID</label>
                             <input type="text" class="form-control" id="staffId" required>
+                            <div class="error-message" id="staffIdError"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="startTime" class="form-label">Start Time</label>
-                            <input type="time" class="form-control" id="startTime" required>
+                            <label for="shiftDate" class="form-label">Shift Date</label>
+                            <input type="date" class="form-control" id="shiftDate" required>
+                            <div class="error-message" id="dateError"></div>
                         </div>
-                        <div class="mb-3">
-                            <label for="endTime" class="form-label">End Time</label>
-                            <input type="time" class="form-control" id="endTime" required>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="startTime" class="form-label">Start Time</label>
+                                <input type="time" class="form-control" id="startTime" required>
+                                <div class="error-message" id="startTimeError"></div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="endTime" class="form-label">End Time</label>
+                                <input type="time" class="form-control" id="endTime" required>
+                                <div class="error-message" id="endTimeError"></div>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-success w-100">Save Shift</button>
                     </form>
@@ -132,7 +149,144 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Khởi tạo toast
+        const notificationToast = new bootstrap.Toast(document.getElementById('notification'));
+
+        // Hàm hiển thị thông báo
+        function showNotification(message, isSuccess = true) {
+            const toast = document.getElementById('notification');
+            toast.classList.remove('bg-primary', 'bg-danger', 'bg-success');
+            toast.classList.add(isSuccess ? 'bg-success' : 'bg-danger');
+            toast.querySelector('.toast-body').textContent = message;
+            notificationToast.show();
+        }
+
+        // Hàm xử lý submit form
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+
+            // Lấy giá trị từ form
+            const staffId = document.getElementById('staffId').value.trim();
+            const shiftDate = document.getElementById('shiftDate').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+
+            // Validation
+            let isValid = true;
+            if (!staffId) {
+                document.getElementById('staffIdError').textContent = 'Vui lòng nhập Staff ID';
+                isValid = false;
+            }
+            if (!shiftDate) {
+                document.getElementById('dateError').textContent = 'Vui lòng chọn ngày';
+                isValid = false;
+            }
+            if (!startTime) {
+                document.getElementById('startTimeError').textContent = 'Vui lòng chọn giờ bắt đầu';
+                isValid = false;
+            }
+            if (!endTime) {
+                document.getElementById('endTimeError').textContent = 'Vui lòng chọn giờ kết thúc';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            try {
+                const response = await fetch('http://localhost:3000/api/shifts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        staffId,
+                        startDate: `${shiftDate}T${startTime}:00`,
+                        endDate: `${shiftDate}T${endTime}:00`
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || 'Lỗi khi thêm ca làm việc');
+                }
+
+                // Làm mới danh sách và đóng modal
+                await loadShifts();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addShiftModal'));
+                if (modal) modal.hide();
+                document.getElementById('shiftForm').reset();
+
+                showNotification('Thêm ca thành công!', true);
+
+            } catch (error) {
+                showNotification(`Lỗi: ${error.message}`, false);
+                console.error('Error:', error);
+            }
+        }
+
+        // Các hàm hỗ trợ
+        function formatDate(dateTimeStr) {
+            try {
+                return new Date(dateTimeStr).toLocaleDateString('en-US');
+            } catch {
+                return 'Invalid Date';
+            }
+        }
+
+        function formatTime(dateTimeStr) {
+            try {
+                return new Date(dateTimeStr).toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
+            } catch {
+                return 'Invalid Time';
+            }
+        }
+
+        async function loadShifts() {
+            try {
+                const response = await fetch('http://localhost:3000/api/shifts');
+                if (!response.ok) throw new Error('Failed to fetch');
+
+                const shifts = await response.json();
+                const tbody = document.querySelector('table tbody');
+                tbody.innerHTML = '';
+
+                shifts.forEach(shift => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${shift.StaffId} (${shift.StaffName || 'N/A'})</td>
+                            <td>${formatDate(shift.StartDate)}</td>
+                            <td>${formatTime(shift.StartDate)}</td>
+                            <td>${formatTime(shift.EndDate)}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+            } catch (error) {
+                showNotification('Không thể tải dữ liệu', false);
+                console.error('Lỗi khi tải dữ liệu:', error);
+            }
+        }
+
+        // Khởi tạo
+        document.getElementById('shiftForm').addEventListener('submit', handleSubmit);
+        document.getElementById('shiftDate').valueAsDate = new Date(); // Set default date to today
+        window.addEventListener('DOMContentLoaded', loadShifts);
+    </script>
 </body>
+
 </html>

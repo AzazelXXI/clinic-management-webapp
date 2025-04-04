@@ -74,46 +74,36 @@ app.post('/api/patient/login', async (req, res) => {
     }
 });
 // Booking appointment
-app.post('/api/appointment/book', async (req, res) => {
+app.post('/api/book-appointment', async (req, res) => {
+    const { name, email, phone, date, time, status } = req.body;
+    const start_date = `${date} ${time}:00`;
+
     try {
-        // Lấy dữ liệu từ request body
-        const { Name, Email, Phone, Start_Date, Status } = req.body;
+        // 1. Tìm ID của bệnh nhân dựa trên tên
+        const patientResult = await db.query('SELECT Id FROM Patient WHERE Name = ?', [name]);
 
-        // Kiểm tra các trường dữ liệu yêu cầu
-        if (!Name || !Email || !Phone || !Start_Date || !Status) {
-            return res.status(400).json({ error: "Missing fields of data input" });
+        if (patientResult && patientResult.length > 0) {
+            const patientId = patientResult[0].Id;
+
+            // 2. Lưu thông tin lịch hẹn vào bảng Appointment
+            const appointmentResult = await db.query(
+                'INSERT INTO Appointment (PatientId, Start_Date, Status) VALUES (?, ?, ?)',
+                [patientId, start_date, status]
+            );
+
+            if (appointmentResult.rowsAffected && appointmentResult.rowsAffected[0] > 0) {
+                res.status(200).json({ message: 'Appointment booked successfully!' });
+            } else {
+                res.status(500).json({ error: 'Failed to book appointment.' });
+            }
+        } else {
+            res.status(404).json({ error: 'Patient not found with the provided name.' });
         }
-
-        // Lấy ID bệnh nhân dựa trên email (giả sử email là duy nhất)
-        let pool = await sql.connect(config);
-        let patientResult = await pool.request()
-            .input('Email', sql.NVarChar, Email)
-            .query('SELECT Id FROM Patient WHERE Email = @Email');
-
-        if (patientResult.recordset.length === 0) {
-            return res.status(404).json({ error: "Patient not found" });
-        }
-
-        const PatientId = patientResult.recordset[0].Id;
-
-        // Giả định StaffId là một bác sĩ mặc định (sau này có thể cho người dùng chọn)
-        const defaultStaffId = "DOC123";
-
-        // Thêm cuộc hẹn vào bảng Appointment
-        await pool.request()
-            .input('PatientId', sql.Int, PatientId)
-            .input('StaffId', sql.NVarChar, defaultStaffId)
-            .input('Start_Date', sql.DateTime, Start_Date)
-            .input('Status', sql.NVarChar, Status)  // Truyền thông tin Status (tình trạng bệnh nhân)
-            .query('INSERT INTO Appointment (PatientId, StaffId, Start_Date, Status) VALUES (@PatientId, @StaffId, @Start_Date, @Status)');
-
-        res.status(200).json({ message: "Appointment booked successfully!" });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: "Couldn't book appointment" });
+        console.error('Error booking appointment:', error);
+        res.status(500).json({ error: 'Internal server error.' });
     }
 });
-
 
 
 app.put('/api/patient/update/:Id', async (req, res) => {
